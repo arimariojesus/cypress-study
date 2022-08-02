@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 context('Querying', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/querying')

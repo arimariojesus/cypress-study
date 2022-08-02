@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 context('Cookies', () => {
   beforeEach(() => {
     Cypress.Cookies.debug(true)

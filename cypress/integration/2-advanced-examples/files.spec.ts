@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 /// JSON fixture file can be loaded directly using
 // the built-in JavaScript bundler
 // @ts-ignore
