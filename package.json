@@ -5,6 +5,7 @@
   "author": "arimariojesus <arimario.jesus@hotmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
     "cypress": "^8.7.0",
     "typescript": "^4.7.4"
   }
