@@ -4,6 +4,11 @@
   "main": "index.js",
   "author": "arimariojesus <arimario.jesus@hotmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test:cy": "npx cypress open",
+    "test:cy:run": "npx cypress run",
+    "test:cy:mobile": "npx cypress run --config viewportWidth=411,viewportHeight=823"
+  },
   "devDependencies": {
     "@testing-library/cypress": "^8.0.3",
     "cypress": "^8.7.0",
