@@ -1,3 +1,5 @@
+import { format } from '../support/utils'
+
 describe('ari.money', () => {
   beforeEach(() => {
     cy.visit('')
@@ -62,5 +64,45 @@ describe('ari.money', () => {
       .click()
 
     cy.get('table > tbody > tr').should('have.length', 0)
+  })
+  
+  it('Should have correct total balance', () => {
+    
+    cy.findByText('Nova transação').click()
+    cy.findByPlaceholderText('Título').type('Mesada')
+    cy.findByPlaceholderText('Valor').type('500')
+    cy.findByText('Entrada').click()
+    cy.findByPlaceholderText('Categoria').type('Fixo')
+    cy.findByText('Cadastrar').click()
+    
+    cy.findByText('Nova transação').click()
+    cy.findByPlaceholderText('Título').type('Pizza')
+    cy.findByPlaceholderText('Valor').type('100')
+    cy.findByText('Saída').click()
+    cy.findByPlaceholderText('Categoria').type('Comida')
+    cy.findByText('Cadastrar').click()
+
+    let incomes = 0
+    let expenses = 0
+
+    cy.get('table > tbody > tr')
+      .each(($el) => {
+        const $transaction = $el.find('td.deposit, td.withdraw')
+        
+        if ($transaction.hasClass('deposit')) {
+          incomes += format($transaction.text())
+        } else {
+          expenses += -(format($transaction.text()))
+        }
+
+      })
+    
+    cy.get('.highlight-background > strong').invoke('text').then(text => {
+      const formattedTotalDisplay = format(text)
+      const expectedTotal = incomes + expenses
+
+      expect(formattedTotalDisplay).to.eq(expectedTotal)
+    })
+    
   })
 })
