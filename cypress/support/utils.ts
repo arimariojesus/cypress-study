@@ -2,7 +2,7 @@ export const format = (value: string) => {
   const number = value.split('$')[1].trim()
   const formattedValue = number.replace('.', '').replace(',', '.')
 
-  return Number(formattedValue)
+  return value.includes('-') ? -Number(formattedValue) : Number(formattedValue)
 }
 
 export const randomNumber = () => {
