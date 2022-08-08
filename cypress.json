@@ -1,3 +1,4 @@
 {
-  "baseUrl": "https://arimoney.netlify.app"
+  "baseUrl": "https://arimoney.netlify.app",
+  "video": false
 }
