@@ -1,4 +1,4 @@
-import { format } from '../support/utils'
+import { format, prepareLocalStorage, items } from '../support/utils'
 
 interface TransactionReturn {
   title: string
@@ -29,39 +29,37 @@ const makeExpenseTransaction = (): TransactionReturn => {
 
 describe('ari.money', () => {
   beforeEach(() => {
-    cy.visit('')
-    cy.get('table > tbody > tr').should('have.length', 0)
+    cy.visit('', {
+      onBeforeLoad: prepareLocalStorage,
+    })
   })
   
   it('Should register a new incoming transaction', () => {
     makeIncomingTransaction()
 
-    cy.get('table > tbody > tr').should('have.length', 1)
+    cy.get('table > tbody > tr').should('have.length', items.length + 1)
   })
   
   it('Should register a new expense transaction', () => {
     makeExpenseTransaction()
 
-    cy.get('table > tbody > tr').should('have.length', 1)
+    cy.get('table > tbody > tr').should('have.length', items.length + 1)
   })
   
   it('Should remove transactions correctly', () => {
-    const income = makeIncomingTransaction()
-    const expense = makeExpenseTransaction()
-
     cy.get('table > tbody > tr').should('have.length', 2)
 
     cy.get('table > tbody')
-      .contains(income.title)
+      .contains(items[0].title)
       .parent()
       .findByAltText('Remover transação')
       .click()
 
-    cy.get('table > tbody > tr').contains(income.title).should('not.exist')
+    cy.get('table > tbody > tr').contains(items[0].title).should('not.exist')
     cy.get('table > tbody > tr').should('have.length', 1)
 
     cy.get('table > tbody')
-      .contains(expense.title)
+      .contains(items[1].title)
       .parent()
       .findByAltText('Remover transação')
       .click()
@@ -70,10 +68,6 @@ describe('ari.money', () => {
   })
   
   it('Should have correct balance', () => {
-    
-    makeIncomingTransaction()
-    makeExpenseTransaction()
-
     let incomes = 0
     let expenses = 0
 
