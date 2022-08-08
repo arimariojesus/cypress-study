@@ -1,4 +1,4 @@
-import { format, prepareLocalStorage, items } from '../support/utils'
+import { format, prepareLocalStorage, items, formatDateTime } from '../support/utils'
 
 interface TransactionReturn {
   title: string
@@ -90,5 +90,19 @@ describe('ari.money', () => {
       expect(formattedTotalDisplay).to.eq(expectedTotal)
     })
     
+  })
+
+  it('Should render items correctly initially', () => {
+    cy.get('table > tbody > tr').should('have.length', 2)
+    
+    cy.get('table > tbody > tr').each(($el, index) => {
+      const $columns = $el.find('> td')
+      
+      expect($columns[0].textContent).to.eq(items[index].title)
+      expect($columns[1]).to.have.class(items[index].type)
+      expect(String(format($columns[1].textContent))).to.eq(String(items[index].amount))
+      expect($columns[2].textContent).to.eq(items[index].category)
+      expect($columns[3].textContent).to.eq(formatDateTime(items[index].createdAt))
+    })
   })
 })
