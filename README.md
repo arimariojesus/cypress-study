@@ -1,5 +1,9 @@
 # Cypress
 
+## Mental Map
+
+https://whimsical.com/cypress-essencial-USARd5G1FioGkoNzT8u3pH
+
 ## Setting Up Cypress on Ubuntu WSL2
 
 Natively, wsl does not allow us to run GUI applications like [Cypress](cypress.io). For this, we need to add some addditional settings.
